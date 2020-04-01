@@ -36,10 +36,10 @@ class Layer:
         self.biases = np.random.rand(neurons_num,)
         self.neurons_num = neurons_num
         
-    def num_of_weights_per_one_neuron():
-        return len(self.weights) / self.neurons_num
+    def num_of_weights_per_one_neuron(self):
+        return len(self.weights) // self.neurons_num
     
-    def weights_arr_for_specific_neuron(neuron_num):
+    def weights_arr_for_specific_neuron(self, neuron_num):
         arr = []
         for i in range(neuron_num * self.num_of_weights_per_one_neuron(), 
                        (neuron_num+1) * self.num_of_weights_per_one_neuron()):
@@ -54,7 +54,7 @@ class Model:
     def addLayer(self, layer):
         self.layers.append(layer)
         
-    def left_neur_index_by_weight_number(weight_number, layer_number):
+    def left_neur_index_by_weight_number(self, weight_number, layer_number):
         return weight_number % self.layers[layer_number].num_of_weights_per_one_neuron()
         
     def predict(self, x):
