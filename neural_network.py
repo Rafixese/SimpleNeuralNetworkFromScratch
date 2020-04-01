@@ -58,10 +58,6 @@ class Model:
         return weight_number % self.layers[layer_number].num_of_weights_per_one_neuron()
         
     def predict(self, x):
-        if len(x) != self.layers[0].neurons_num:
-            print("Wrong input array shape")
-            return None
-        
         # pierwszymi wartościami będą wartości wejścia
         neuron_values = [x]
         
