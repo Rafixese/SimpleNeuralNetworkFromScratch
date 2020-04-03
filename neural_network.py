@@ -72,9 +72,9 @@ class Model:
                 # iterujemy po wagach dla danego neuronu, 
                 for weight_num in self.layers[layer_num].weights_arr_for_specific_neuron(neur_num):
                     # do wartości neuronu dodajemy iloczyn danej wagi i wartości połączonego z nią neuronu z warstwy po lewej
-                    value += self.layers[layer_num].weights[weight_num] * neuron_values[layer_num-1][self.left_neur_index_by_weight_number(weight_num, layer_num)]
-                # jeżeli mamy już sumę wszystkich wag * połączonych do nich neuronów dodajemy ją do tymczasowej tablicy
-                layer_values.append(NeuralNetworkUtils.sigmoid(value))
+                    value += self.layers[layer_num].weights[weight_num] * neuron_values[layer_num][self.left_neur_index_by_weight_number(weight_num, layer_num)]
+                # jeżeli mamy już sumę wszystkich wag * połączonych do nich neuronów dodajemy ją do tymczasowej tablicy (pomnożoną jeszcze o wartość biasu)
+                layer_values.append(NeuralNetworkUtils.sigmoid(value * self.layers[layer_num].biases[neur_num]))
             # gdy zgromadzimy wszystkie wartości neuronów danej warstwy dodajemy tablice do ogólnej tablicy
             # ze wszystkimi wartościami neuronów w modelu
             neuron_values.append(layer_values.copy())
@@ -83,11 +83,6 @@ class Model:
         # oraz wszystkie wyniki poszczególnych neuronów
         return neuron_values[-1][0], neuron_values
     
-    def predict_array(self, x):
-        arr = []
-        for row in x:
-            arr.append(self.predict(row))
-        return arr
     
     def train(self, x_train, y_train, learn_rate = 0.1, epochs = 100):
         #iterujemy po epokach
@@ -99,11 +94,12 @@ class Model:
                 # obliczamy pochodną z mse do późniejszej zmiany wag
                 deriv_mse = -2 * (y - y_pred)
                 
-                delta_wages = []
+                # tutaj będziemy trzymać wyniki
+                delta_weights = []
                 delta_biases = []
                 delta_neurons = []
                 
-                pass
+                
                 
             
     
